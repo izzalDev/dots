@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+NO_WINDOW_APPS=$(osascript <<EOF
+tell application "System Events"
+	set apps to processes whose background only is false
+	set noWindowApps to {}
+	
+	repeat with anApp in apps
+		try
+			if (name of anApp) is "Finder" then error 0
+			
+			if (count of windows of anApp) is not 0 then error 0
+			
+			set end of noWindowApps to name of anApp
+		end try
+	end repeat
+	
+	return noWindowApps
+end tell
+EOF
+)
+
+if [ -n "$NO_WINDOW_APPS" ]; then
+  killall $(awk '{gsub(/, /, "\n"); print $0}' <<< $NO_WINDOW_APPS)
+fi
+
