@@ -10,4 +10,4 @@ cask 'microsoft-excel'
 cask 'microsoft-powerpoint'
 cask 'arc'
 brew 'jq'
-brew 'sleepwatcher'
+brew 'sleepwatcher', postinstall:"cp sleepwatcher/wakeup ~/.wakeup", restart_sevice: :changed
