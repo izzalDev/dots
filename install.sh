@@ -29,8 +29,15 @@ setup() {
   exit 1
 }
 
+clean_dock(){
+  echo "==>Removing all dock items..."
+  defaults write com.apple.dock persistent-apps -array
+  killall Dock
+}
+
 main(){
   setup
+  clean_dock
 
   BREW_SHELLENV="/opt/homebrew/bin/brew shellenv"
   BREW_BIN="/opt/homebrew/bin/brew"
