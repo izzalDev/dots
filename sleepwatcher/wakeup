@@ -1,26 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 
-NO_WINDOW_APPS=$(osascript <<EOF
-tell application "System Events"
-	set apps to processes whose background only is false
-	set noWindowApps to {}
-	
-	repeat with anApp in apps
-		try
-			if (name of anApp) is "Finder" then error 0
-			
-			if (count of windows of anApp) is not 0 then error 0
-			
-			set end of noWindowApps to "\"" & name of anApp & "\"\n"
-		end try
-	end repeat
+function main(){
+  quit_no_window_app
+}
 
-	return noWindowApps as text
-end tell
-EOF
-)
+function quit_no_window_app(){
+  osascript -e '
+  tell application "System Events"
+	  set apps to processes whose background only is false
+	  repeat with anApp in apps
+		  set appName to name of anApp
+		  set windowCount to count of window of anApp
+		  if windowCount is 0 and appName is not "Finder" then
+			  do shell script "killall " & quoted form of appName
+		  end if
+	  end repeat
+  end tell'
+}
 
-if [ -n "$NO_WINDOW_APPS" ]; then
-  xargs killall <<< $NO_WINDOW_APPS
-fi
+main
 
