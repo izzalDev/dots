@@ -11,8 +11,9 @@ brew 'btop'
 brew 'lazygit'
 brew 'lazydocker'
 brew 'yazi'
-brew 'sleepwatcher', postinstall:"cp sleepwatcher/wakeup ~/.wakeup", restart_sevice: :changed
-
+brew 'sleepwatcher', postinstall:"cp sleepwatcher/wakeup ~/.wakeup", start_service: true
+brew 'colima', start_service: true
+brew 'docker'
 
 cask_args no_quarantine: true
 cask 'ghostty'
@@ -21,3 +22,4 @@ cask 'microsoft-excel'
 cask 'microsoft-powerpoint'
 cask 'arc'
 cask 'obsidian'
+cask 'displaperture'
