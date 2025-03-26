@@ -13,10 +13,11 @@ brew 'lazydocker'
 brew 'yazi'
 brew 'sleepwatcher', postinstall:"cp sleepwatcher/wakeup ~/.wakeup", restart_sevice: :changed
 
+
+cask_args no_quarantine: true
 cask 'ghostty'
 cask 'microsoft-word'
 cask 'microsoft-excel'
 cask 'microsoft-powerpoint'
 cask 'arc'
 cask 'obsidian'
-
