@@ -29,15 +29,26 @@ setup() {
   exit 1
 }
 
-clean_dock(){
-  echo "==>Removing all dock items..."
+setup_dock() {
+  BLUE='\033[0;34m'  # ANSI code for blue text
+  NC='\033[0m'       # Reset color
+
+  echo -e "${BLUE}==>${NC} Removing all dock items..."
   defaults write com.apple.dock persistent-apps -array
+
+  echo -e "${BLUE}==>${NC} Enabling recent applications in Dock..."
+  defaults write com.apple.dock show-recents -bool true
+
+  echo -e "${BLUE}==>${NC} Setting recent applications count..."
+  defaults write com.apple.dock show-recent-count -int 10
+
+  echo -e "${BLUE}==>${NC} Restarting Dock..."
   killall Dock
 }
 
 main(){
   setup
-  clean_dock
+  setup_dock
 
   BREW_SHELLENV="/opt/homebrew/bin/brew shellenv"
   BREW_BIN="/opt/homebrew/bin/brew"
