@@ -11,16 +11,16 @@ tell application "System Events"
 			
 			if (count of windows of anApp) is not 0 then error 0
 			
-			set end of noWindowApps to name of anApp
+			set end of noWindowApps to "\"" & name of anApp & "\"\n"
 		end try
 	end repeat
-	
-	return noWindowApps
+
+	return noWindowApps as text
 end tell
 EOF
 )
 
 if [ -n "$NO_WINDOW_APPS" ]; then
-  killall $(awk '{gsub(/, /, "\n"); print $0}' <<< $NO_WINDOW_APPS)
+  xargs killall <<< $NO_WINDOW_APPS
 fi
 
