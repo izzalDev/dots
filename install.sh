@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setup() {
+setup_sudo_askpass() {
   set -e
   caffeinate &
 
@@ -47,7 +47,7 @@ setup_dock() {
 }
 
 main(){
-  setup
+  setup_sudo_askpass
   setup_dock
 
   BREW_SHELLENV="/opt/homebrew/bin/brew shellenv"
