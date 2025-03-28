@@ -21,6 +21,7 @@ brew 'sketchybar',
   postinstall:"cp -R sketchybar/ ~/.config/sketchybar/",
   start_service: true
 brew 'bitwarden-cli'
+brew 'duti'
 
 cask_args no_quarantine: true
 cask 'ghostty'
@@ -32,5 +33,8 @@ cask 'obsidian'
 cask 'displaperture'
 cask 'font-sf-mono-nerd-font-ligaturized'
 cask 'font-sf-pro'
+cask 'google-drive'
+cask 'iina'
 
 mas "Bitwarden", id: 1352778147
+mas "Xcode", id: 497799835
