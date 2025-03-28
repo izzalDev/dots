@@ -1,11 +1,20 @@
 #!/bin/bash
 
+main(){
+  echo A | softwareupdate --install-rosetta
+  setup_sudo_askpass
+  setup_homebrew
+  brew bundle --verbose
+  postinstall_xcode
+  setup_dock
+}
+
 setup_sudo_askpass() {
   set -e
   caffeinate &
 
   TMPFILE=$(mktemp)
-  trap 'echo "Cleaning up credentioals..."; rm -f "$TMPFILE"' EXIT
+  trap 'echo "Cleaning up credentials..."; rm -f "$TMPFILE"' EXIT
   
   for i in 1 2 3; do
     read -s -p "Password: " PASSWORD
@@ -29,27 +38,7 @@ setup_sudo_askpass() {
   exit 1
 }
 
-setup_dock() {
-  BLUE='\033[0;34m'  # ANSI code for blue text
-  NC='\033[0m'       # Reset color
-
-  echo -e "${BLUE}==>${NC} Removing all dock items..."
-  defaults write com.apple.dock persistent-apps -array
-
-  echo -e "${BLUE}==>${NC} Enabling recent applications in Dock..."
-  defaults write com.apple.dock show-recents -bool true
-
-  echo -e "${BLUE}==>${NC} Setting recent applications count..."
-  defaults write com.apple.dock show-recent-count -int 10
-
-  echo -e "${BLUE}==>${NC} Restarting Dock..."
-  killall Dock
-}
-
-main(){
-  setup_sudo_askpass
-  setup_dock
-
+setup_homebrew(){
   BREW_SHELLENV="/opt/homebrew/bin/brew shellenv"
   BREW_BIN="/opt/homebrew/bin/brew"
 
@@ -68,9 +57,35 @@ main(){
     eval "$($BREW_SHELLENV)"
     echo "Homebrew installed and configured successfully."
   fi
+}
 
-  # Run Brew bundle
-  brew bundle --verbose
+setup_dock() {
+  BLUE='\033[0;34m'  # ANSI code for blue text
+  NC='\033[0m'       # Reset color
+
+  echo -e "${BLUE}==>${NC} Removing all dock items..."
+  defaults write com.apple.dock persistent-apps -array
+
+  echo -e "${BLUE}==>${NC} Enabling recent applications in Dock..."
+  defaults write com.apple.dock show-recents -bool true
+
+  echo -e "${BLUE}==>${NC} Setting recent applications count..."
+  defaults write com.apple.dock show-recent-count -int 10
+
+  echo -e "${BLUE}==>${NC} Restarting Dock..."
+  killall Dock
+}
+
+postinstall_xcode(){
+  if mas list | grep -q "Xcode"; then
+    return 0
+  fi
+
+  echo "==> Executing postinstall script for Xcode..."
+  sudo -A xcode-select -s /Applications/Xcode.app/Contents/Developer
+  sudo -A xcodebuild -license accept
+  sudo -A xcodebuild -runFirstLaunch
+  sudo -A xcodebuild -downloadPlatform iOS
 }
 
 main
