@@ -35,6 +35,7 @@ cask 'font-sf-mono-nerd-font-ligaturized'
 cask 'font-sf-pro'
 cask 'google-drive'
 cask 'iina'
+cask 'the-unarchiver'
 
 mas "Bitwarden", id: 1352778147
 mas "Xcode", id: 497799835
