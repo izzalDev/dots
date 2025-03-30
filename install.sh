@@ -1,6 +1,7 @@
 #!/bin/bash
 
 main(){
+  mkdir -p ~/Repositories ~/Obsidian\ Vault/
   echo A | softwareupdate --install-rosetta
   setup_sudo_askpass
   setup_homebrew
