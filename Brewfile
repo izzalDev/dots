@@ -22,6 +22,7 @@ brew 'sketchybar',
   start_service: true
 brew 'bitwarden-cli'
 brew 'duti'
+brew 'koekeishiya/formulae/skhd'
 
 cask_args no_quarantine: true
 cask 'ghostty'
@@ -36,6 +37,8 @@ cask 'font-sf-pro'
 cask 'google-drive'
 cask 'iina'
 cask 'the-unarchiver'
+cask 'miniconda',
+  postinstall: '/opt/homebrew/bin/conda init "$(basename "${SHELL}")"'
 
 mas "Bitwarden", id: 1352778147
 mas "Xcode", id: 497799835
