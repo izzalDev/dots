@@ -25,6 +25,7 @@ brew 'duti'
 brew 'koekeishiya/formulae/skhd',
   postinstall: 'cp -R skhd/ ~/.config/skhd/ && /opt/homebrew/bin/skhd --start-service'
 brew 'starship'
+brew 'tre-command'
 
 cask_args no_quarantine: true
 cask 'ghostty'
