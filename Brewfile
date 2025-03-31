@@ -39,6 +39,7 @@ cask 'iina'
 cask 'the-unarchiver'
 cask 'miniconda',
   postinstall: '/opt/homebrew/bin/conda init "$(basename "${SHELL}")"'
+cask 'chatgpt'
 
 mas "Bitwarden", id: 1352778147
 mas "Xcode", id: 497799835
