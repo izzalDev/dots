@@ -22,7 +22,8 @@ brew 'sketchybar',
   start_service: true
 brew 'bitwarden-cli'
 brew 'duti'
-brew 'koekeishiya/formulae/skhd'
+brew 'koekeishiya/formulae/skhd',
+  postinstall: 'cp -R skhd/ ~/.config/skhd/ && /opt/homebrew/bin/skhd --start-service'
 brew 'starship'
 
 cask_args no_quarantine: true
