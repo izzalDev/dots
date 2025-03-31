@@ -23,6 +23,7 @@ brew 'sketchybar',
 brew 'bitwarden-cli'
 brew 'duti'
 brew 'koekeishiya/formulae/skhd'
+brew 'starship'
 
 cask_args no_quarantine: true
 cask 'ghostty'

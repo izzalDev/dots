@@ -8,8 +8,17 @@ function main {
   brew bundle --verbose
   postinstall_xcode
   postinstall_ghostty
+  postinstall_starship
   setup_dock
   return 0
+}
+
+function postinstall_starship {
+  info "Executing postinstall script for starship"
+  local script='eval "$(starship init zsh)"'
+  if ! cat ~/.zshrc | grep -q "$script"; then
+    echo "$script" >> ~/.zshrc
+  fi
 }
 
 function info {
