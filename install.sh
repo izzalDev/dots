@@ -45,6 +45,8 @@ function postinstall_ghostty {
   local CONFIG_FILE="${HOME}/.config/ghostty/config"
   mkdir -p "${CONFIG_DIR}"
   echo "macos-titlebar-style = hidden" > "${CONFIG_FILE}"
+  echo "window-padding-x = 5" >> "${CONFIG_FILE}"
+  echo "window-padding-y = 5" >> "${CONFIG_FILE}" 
 }
 
 function setup_sudo_askpass {
