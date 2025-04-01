@@ -3,10 +3,10 @@
 function main {
   setup_sudo_askpass
   mkdir -p ~/Repositories ~/Obsidian\ Vault/
-  install_rosetta2
+  install_rosetta
   setup_homebrew
   brew bundle --verbose
-  postinstall_xcode
+  postinstall
   postinstall_ghostty
   postinstall_starship
   setup_dock
@@ -107,16 +107,15 @@ function setup_dock {
   defaults write com.apple.dock show-recent-count -int 10
 }
 
-function postinstall_xcode {
-  if ! mas list | grep -q "Xcode"; then
-    return 0
-  fi
-
-  info "Executing postinstall script for Xcode..."
-  sudo -A xcode-select -s /Applications/Xcode.app/Contents/Developer
-  sudo -A xcodebuild -license accept
-  sudo -A xcodebuild -runFirstLaunch
-  sudo -A xcodebuild -downloadPlatform iOS
+function postinstall {
+  local POSTINSTALL_SCRIPTS=$(find postinstall -type f)
+  for script in $POSTINSTALL_SCRIPTS; do
+    local SCRIPT_NAME="$(basename "$script")"
+    if brew bundle list --all | grep -q "$SCRIPT_NAME"; then
+      info "Executing postinstall script for $SCRIPT_NAME..."
+      $script 
+    fi
+  done
 }
 
 main

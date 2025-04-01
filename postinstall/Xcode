@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo -A xcode-select -s /Applications/Xcode.app/Contents/Developer
+sudo -A xcodebuild -license accept
+sudo -A xcodebuild -runFirstLaunch
+sudo -A xcodebuild -downloadPlatform iOS
