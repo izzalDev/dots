@@ -105,6 +105,8 @@ function setup_dock {
   defaults write com.apple.dock show-recents -bool true
   info "Setting recent applications count..."
   defaults write com.apple.dock show-recent-count -int 10
+  defaults write com.apple.finder CreateDesktop false
+  killall Finder
 }
 
 function postinstall {
