@@ -1,0 +1,5 @@
+[[opener.edit]]
+run = '[ -d "$@" ] && cd "$@" && nvim || nvim "$@"'
+desc = "nvim"
+block = true
+for = "unix"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+{
+  cp -R yazi/ ~/.config/yazi/
+}
