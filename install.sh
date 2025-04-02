@@ -55,7 +55,8 @@ function postinstall_ghostty {
   mkdir -p "${CONFIG_DIR}"
   echo "macos-titlebar-style = hidden" > "${CONFIG_FILE}"
   echo "window-padding-x = 5" >> "${CONFIG_FILE}"
-  echo "window-padding-y = 5" >> "${CONFIG_FILE}" 
+  echo "window-padding-y = 5" >> "${CONFIG_FILE}"
+  echo "theme = light:Github-Light-Default,dark:Github-Dark-Default" >> "${CONFIG_FILE}"
 }
 
 function setup_sudo_askpass {
