@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp -R sketchybar/ ~/.config/sketchybar/
+brew services restart sketchybar
