@@ -1,0 +1,23 @@
+# ================================
+# Dotfiles Distribution List
+# ================================
+# Format for each line:
+#   [method] <source_path> -> <target_path>
+#
+# Explanation:
+# - method (optional): can be 'copy' or 'symlink'. Default is 'symlink'.
+# - source_path: relative path from the script's directory.
+# - target_path: absolute path (usually under home directory, like ~/.config).
+#
+# Examples:
+#   symlink nvim/ -> ~/.config/nvim
+#   copy ghostty/ -> ~/.config/ghostty
+#   zshrc -> ~/.zshrc        # default: symlink
+#
+# Notes:
+# - Use trailing slash (/) only for source directories.
+
+# NEOVIM
+nvim/ -> ~/.config/nvim
+
+bin/ -> /usr/local/bin

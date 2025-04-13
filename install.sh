@@ -10,7 +10,61 @@ function main {
   postinstall_ghostty
   postinstall_starship
   setup_dock
+  dist_dots
   return 0
+}
+
+# Usage: dist_dots [default_method] [dotpaths_file]
+#
+# Distribute dotfiles from a dotpaths_file
+#
+# Arguments:
+#   [default_method] Optional: Default method used to distribute dotfiles
+#                    (either 'copy' or 'symlink'). Default to 'copy'
+#   [dotpaths_file]  Optional: Path to dotpaths file. Default to 'dotpaths'. 
+function dist_dots {
+  local default_method="${1:-symlink}"
+  local dotpaths_file="${2:-dotpaths}"
+
+  if [[ ! "$default_method" =~ ^(copy|symlink)$ ]]; then
+    echo "Error: default_method either 'copy' or 'symlink'"
+    return 1
+  fi
+
+  if [[ ! -f "$dotpaths_file" ]]; then
+    echo "Error: file '$dotpaths_file' not found!"
+    return 1
+  fi
+
+  awk -v default_method="$default_method" -v pwd="$(pwd)" '
+    BEGIN { IGNORECASE = 1 }
+    /^[[:space:]]*(#|$)/ { next }
+    {
+      method = default_method
+
+      if ($1 ~ /^(copy|symlink)/) {
+        method = $1
+        sub(/^(copy|symlink)/, "", $0)
+      }
+
+      split($0, parts, "->")
+
+      if (length(parts) != 2) {
+        print "Invalid line (missing ->) at line", NR, $0 > "/dev/stderr"
+      }
+
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", parts[1])
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", parts[2])
+      gsub(/[[:space:]]+/, "\ ", parts[1])
+      gsub(/[[:space:]]+/, "\ ", parts[2])
+
+      if (method == "symlink"){
+        print "mkdir -p $(dirname", parts[2] "); ln -sf", pwd "/" parts[1], parts[2]
+      } else if (method == "copy"){
+        print "cp -r", parts[1], parts[2]
+      }
+    }
+  ' "$dotpaths_file" | bash
 }
 
 function postinstall_starship {
